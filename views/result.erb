@@ -1,0 +1,58 @@
+<h1>Your result</h1>
+<div>Sum: <%= @loan.sum %></div>
+<div>Percent: <%= (@loan.percent * 100 * 12).round(2) %></div>
+<div>
+  <table>
+    <tr>
+      <th>Month number</th>
+      <th>Loan pay</th>
+      <th>Percent pay</th>
+      <th>Sum pay</th>
+      <th>Left</th>
+    </tr>
+    <% if @loan.class.name == "StandardLoan" %>
+      <% @total_percent_pay = 0 %>
+      <% @total_pay = 0 %>
+      <% @loan.months.to_i.times do |iterator| %>
+        <% @total_percent_pay += @hash[iterator + 1][:percent_pay].round(2) %>
+        <% @total_pay += (@loan.loan_pay + @hash[iterator + 1][:percent_pay]).round(2) %>
+        <tr>
+          <td><%= iterator + 1 %></td>
+          <td><%= @loan.loan_pay.round(2) %></td>
+          <td><%= @hash[iterator + 1][:percent_pay].round(2) %></td>
+          <td><%= (@loan.loan_pay + @hash[iterator + 1][:percent_pay]).round(2) %></td>
+          <td><%= @hash[iterator + 1][:left].round(2) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td></td>
+        <td><%= (@loan.loan_pay * @loan.months).round(2) %></td>
+        <td><%= @total_percent_pay %></td>
+        <td><%= @total_pay %></td>
+        <td></td>
+      </tr>
+    <% else %>
+      <% @total_loan_pay = 0 %>
+      <% @total_percent_pay = 0 %>
+      <% @loan.months.to_i.times do |iterator| %>
+        <% @total_loan_pay += (@loan.monthly_pay - @hash[iterator + 1][:percent_pay]).round(2) %>
+        <% @total_percent_pay += @hash[iterator + 1][:percent_pay].round(2) %>
+        <tr>
+          <td><%= iterator + 1 %></td>
+          <td><%= (@loan.monthly_pay - @hash[iterator + 1][:percent_pay]).round(2) %></td>
+          <td><%= @hash[iterator + 1][:percent_pay].round(2) %></td>
+          <td><%= @loan.monthly_pay.round(2) %></td>
+          <td><%= @hash[iterator + 1][:left].round(2) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td></td>
+        <td><%= @total_loan_pay.round(2) %></td>
+        <td><%= @total_percent_pay.round(2) %></td>
+        <td><%= (@loan.monthly_pay * @loan.months).round(2) %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </table>
+  <div><a href="/">Calculate one more time</a></div>
+</div>

@@ -1,0 +1,16 @@
+<h1>Loan Calculator</h1>
+<h2>Enter Information to Proceed</h2>
+<div>
+    <form action="/result" method="GET">
+      <div>Enter sum of a loan:
+      <input name="loan[amount]" placeholder="10000"></div>
+      <div>Enter number of months:
+      <input name="loan[months]" placeholder="12"></div>
+      <div>Enter percent of a loan:
+      <input name="loan[percent]" placeholder="10"></div>
+      <div>Type of a loan:
+      <div><input type="radio" value="Standard" name="loan[type]" checked> Standard</div>
+      <div><input type="radio" value="Annuity" name="loan[type]"> Anniuty</div>
+      <div><input type="submit" value="Calculate"></div></div>
+  </form>
+</div>
